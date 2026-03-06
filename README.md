@@ -65,6 +65,13 @@ KEV_SOURCE_URL=https://www.cisa.gov/sites/default/files/feeds/known_exploited_vu
 ```bash
 uv run python -m mcp_nvd_server.server
 ```
+### 4. (Optional) Test with MCP inspector
+
+```bash
+npx -y @modelcontextprotocol/inspector
+```
+Open browser link created to launch Inspector. Enter the bash command from step 3 above into the Command field and click Connect. Select the tools tab and enter a CVE Id (eg. CVE-2017-0144) to test and check the response.
+
 
 ## Example tools
 
