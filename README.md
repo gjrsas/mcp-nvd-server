@@ -2,7 +2,7 @@
 MCP server for NIST NVD
 
 
-Starter MCP server for the NIST National Vulnerability Database (NVD) https://nvd.nist.gov/ - the US government repository of standards based vulnerability management data.
+Starter MCP server for the [NIST National Vulnerability Database (NVD)](https://nvd.nist.gov/) - the US government repository of standards based vulnerability management data.
 
 
 
