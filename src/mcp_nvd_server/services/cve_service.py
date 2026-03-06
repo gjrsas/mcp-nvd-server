@@ -1,3 +1,5 @@
+import httpx
+
 from mcp_nvd_server.clients.nvd_client import NVDClient
 
 
@@ -6,7 +8,20 @@ class CVEService:
         self.client = NVDClient()
 
     async def get_cve(self, cve_id: str) -> dict:
-        data = await self.client.get_cve(cve_id)
+        try:
+            data = await self.client.get_cve(cve_id)
+        except httpx.HTTPStatusError as exc:
+            return {
+                "found": False,
+                "cve_id": cve_id,
+                "message": f"NVD HTTP error: {exc.response.status_code}",
+            }
+        except Exception as exc:
+            return {
+                "found": False,
+                "cve_id": cve_id,
+                "message": f"Unexpected error: {str(exc)}",
+            }
 
         vulnerabilities = data.get("vulnerabilities", [])
         if not vulnerabilities:
@@ -17,7 +32,6 @@ class CVEService:
             }
 
         cve = vulnerabilities[0].get("cve", {})
-
         descriptions = cve.get("descriptions", [])
         english_description = next(
             (d.get("value") for d in descriptions if d.get("lang") == "en"),
@@ -30,22 +44,4 @@ class CVEService:
             "published": cve.get("published"),
             "last_modified": cve.get("lastModified"),
             "description": english_description,
-            "raw": cve,
-        }
-
-    async def search_cves(
-        self,
-        keyword: str | None = None,
-        cpe_name: str | None = None,
-        cve_id: str | None = None,
-        cvss_v3_severity: str | None = None,
-        pub_start_date: str | None = None,
-        pub_end_date: str | None = None,
-        last_mod_start_date: str | None = None,
-        last_mod_end_date: str | None = None,
-        limit: int = 10,
-    ) -> dict:
-        return {
-            "message": "search_cves not fully implemented yet",
-            "limit": limit,
         }
