@@ -2,7 +2,9 @@
 MCP server for NIST NVD
 
 
-Starter MCP server for the NIST National Vulnerability Database (NVD), with option to extend into the CISA Known Exploited Vulnerabilities (KEV) catalog.
+Starter MCP server for the NIST National Vulnerability Database (NVD) - the US government repository of standards based vulnerability management data.
+
+### This project is not endorsed or supported by the US Government and is for personal development only.
 
 ## What this repo includes
 
