@@ -25,6 +25,7 @@ def query_cheatsheet() -> str:
 
 
 def main() -> None:
+    print("Starting MCP NVD server...")
     mcp.run()
 
 
