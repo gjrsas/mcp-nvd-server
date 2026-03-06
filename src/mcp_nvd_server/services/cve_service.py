@@ -7,18 +7,17 @@ from mcp_nvd_server.clients.nvd_client import NVDClient
 
 class CVEService:
     """Service layer that normalizes NVD CVE responses for MCP tools."""
-
-    def __init__(self, client: NVDClient | None = None) -> None:
-        self.client = client or NVDClient()
+    def __init__(self) -> None:
+        self.client = NVDClient()
 
     async def get_cve(self, cve_id: str) -> dict[str, Any]:
-        raw = await self.client.get_cve(cve_id)
-        vulns = raw.get("vulnerabilities", [])
+        data = await self.client.get_cve(cve_id)
+        vulns = data.get("vulnerabilities", [])
         if not vulns:
             return {
                 "found": False,
                 "cve_id": cve_id,
-                "message": "No CVE record found in NVD.",
+                "message": f"No CVE found for {cve_id} in NVD.",
             }
 
         return {
