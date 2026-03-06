@@ -77,4 +77,4 @@ Searches NVD CVEs using common filters such as keyword, CPE, severity, and date 
 
 ## NVD attribution
 
-This product uses the NVD API but is not endorsed or certified by the NVD.
+This product uses the NIST NVD API but is not endorsed or supported by NIST or any other US Government agency.
