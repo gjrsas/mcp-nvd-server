@@ -2,7 +2,9 @@
 MCP server for NIST NVD
 
 
-Starter MCP server for the NIST National Vulnerability Database (NVD) - the US government repository of standards based vulnerability management data.
+Starter MCP server for the NIST National Vulnerability Database (NVD) https://nvd.nist.gov/ - the US government repository of standards based vulnerability management data.
+
+
 
 ### This project is not endorsed or supported by the US Government and is for personal development only.
 
@@ -68,14 +70,12 @@ Returns a normalized CVE record for a single CVE ID.
 ### `nvd_search_cves`
 Searches NVD CVEs using common filters such as keyword, CPE, severity, and date windows.
 
-## Suggested next steps
+## Work in progress
 
 1. Add `nvd_search_cpes`
 2. Add `nvd_get_cve_history`
-3. Add a KEV client and KEV lookup tools
-4. Add tests with mocked NVD responses
-5. Add remote HTTP transport
-6. Add Docker support
+3. Add a KEV client and KEV lookup tools for CISA KEV Catalog
+
 
 ## NVD attribution
 
