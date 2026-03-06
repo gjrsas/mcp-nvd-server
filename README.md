@@ -8,12 +8,19 @@ The NVD includes databases of security checklist references, security-related so
 ## Vulnerability Concepts
 Common Vulnerabilities and Exposures (CVE): NVD uses unique identifiers cve_id to identify vulnerabilities and to associate specific versions of code bases (e.g., software and shared libraries) with the Common Platform Enumeration (CPE) to those vulnerabilities. 
 
-Known Exploited Vulnerabilities (KEV): Vulnerabilities that have been observed in the wild are listed in the CISA maintained [KEV Catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog).  NVD flags CVEs listed in the KEV catalog, which provides more information about required actions and mitigation.
+Known Exploited Vulnerabilities (KEV): Subset of CVEs that have been observed in the wild and have a clear remediation action available.  NVD flags CVEs considered KEVs, while the KEV catalog provides more information about required actions and mitigation.
 
-Common Vulnerability Scoring System (CVSS) is a method used to supply a qualitative measure of severity. Metrics result in a numerical score ranging from 0 to 10 (CriticaL). 
+Common Vulnerability Scoring System (CVSS): Standardized evaluation method used to supply a measure of severity. Metrics result in a numerical score ranging from 0 to 10 (CriticaL). 
+
+Common Platform Enumeration (CPE):  Structured naming scheme for information technology systems, software, and packages, which helps with asset management and allows mapping vulnerabilities (CVEs) to specific systems. 
+
 
 ## Vulnerability resources
 [CVE Foundation](https://www.thecvefoundation.org/resources)
+[KEV Catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
+[Common Vulnerability Scoring System](https://www.first.org/cvss/)
+[Common Platform Enumeration](https://nvd.nist.gov/products/cpe)
+
 
 ### This project is not endorsed or supported by the US Government and is for personal development only.
 
