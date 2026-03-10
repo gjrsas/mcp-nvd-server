@@ -1,6 +1,8 @@
 # mcp-nvd-server
 MCP server for NIST NVD
 
+### This project is not endorsed or supported by the US Government and is for personal development only.
+
 Starter MCP server for the [NIST National Vulnerability Database (NVD)](https://nvd.nist.gov/) - the US government repository of standards based vulnerability management data.
 
 The NVD includes databases of security checklist references, security-related software flaws, product names, and impact metrics.
@@ -21,8 +23,6 @@ Common Platform Enumeration (CPE):  Structured naming scheme for information tec
 [Common Vulnerability Scoring System](https://www.first.org/cvss/)  
 [Common Platform Enumeration](https://nvd.nist.gov/products/cpe)  
 
-
-### This project is not endorsed or supported by the US Government and is for personal development only.
 
 ## Current status
 
