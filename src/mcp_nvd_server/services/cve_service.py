@@ -2,7 +2,7 @@ import httpx
 
 from mcp_nvd_server.clients.nvd_client import NVDClient
 from mcp_nvd_server.models import CVESearchResult, CVESummary
-
+from mcp_nvd_server.utils.cvss_helpers import build_normalized_cve
 
 class CVEService:
     def __init__(self) -> None:
@@ -65,13 +65,67 @@ class CVEService:
             }
 
         cve = vulnerabilities[0].get("cve", {})
-        summary = self._normalize_cve(cve)
+        
+        descriptions = cve.get("descriptions", [])
+        english_description = next(
+            (d.get("value") for d in descriptions if d.get("lang") == "en"),
+            None,
+        )
 
+        weaknesses = cve.get("weaknesses", [])
+        cwe_list = []
+        for weakness in weaknesses:
+            for desc in weakness.get("description", []):
+                value = desc.get("value")
+                if value and value not in ("NVD-CWE-Other", "NVD-CWE-noinfo"):
+                    cwe_list.append(value)
+
+        configurations = cve.get("configurations", [])
+        cpe_list = []
+
+        def collect_cpes(nodes: list[dict]) -> None:
+            for node in nodes:
+                for match in node.get("cpeMatch", []):
+                    criteria = match.get("criteria")
+                    if criteria:
+                        cpe_list.append(criteria)
+                for child in node.get("nodes", []):
+                    collect_cpes([child])
+
+        for config in configurations:
+            collect_cpes(config.get("nodes", []))
+
+        references = cve.get("references", [])
+        references_list = [
+            {
+                "url": ref.get("url"),
+                "source": ref.get("source"),
+                "tags": ref.get("tags", []),
+            }
+            for ref in references
+            if ref.get("url")
+        ]
+
+        kev_summary = {}
+
+        normalized = build_normalized_cve(
+            cve_id=cve.get("id", ""),
+            published=cve.get("published"),
+            last_modified=cve.get("lastModified"),
+            description=english_description,
+            cwe=cwe_list,
+            cpes=cpe_list,
+            references=references_list,
+            raw_cve=cve,
+            kev=kev_summary,
+        )
 
         return {
             "found": True,
-            "cve": summary.model_dump(),
+            "cve": normalized.model_dump(),
         }
+
+
 
     async def search_cves(
             self, 
