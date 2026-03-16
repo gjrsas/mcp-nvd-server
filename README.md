@@ -36,12 +36,12 @@ This is an MVP, not a finished production server. It currently focuses on:
 
 - MCP server using `FastMCP`
 - `nvd_get_cve` tool
-- starter NVD API client
-- starter CVE normalization service
+- `nvd_search_cves` tool
+- NVD API client
+- CVE normalization service
 
 Not yet included:
 
-- `nvd_search_cves` tool
 - CPE search
 - CVE history search
 - KEV client and enrichment
@@ -93,7 +93,7 @@ Searches NVD CVEs using common filters such as keyword, CPE, severity score (CVS
 
 ## Work in progress
 
-1. Add tools `nvd_search_cves`, `nvd_search_cpes`, `nvd_get_cve_history`
+1. Add tools `nvd_search_cpes`, `nvd_get_cve_history`
 2. Add a KEV client and KEV lookup tools for CISA KEV Catalog
 
 
