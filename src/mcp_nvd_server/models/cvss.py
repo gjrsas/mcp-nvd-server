@@ -12,14 +12,14 @@ to add typed models for:
 - version-specific metric payloads such as CVSS v3.1 and v2
 - vector strings and exploitability/impact subscores
 - normalization helpers shared by CVE and search responses
+
+
+Keeping this file separate from ``cve.py`` leaves room for CVSS-specific
+ models without making the main CVE response models harder to scan.
+
+No concrete models are defined yet because the current API surface only needs
+normalized summary fields, and those already live in ``CVESummary``.
 """
-
-# Keeping this file separate from ``cve.py`` leaves room for CVSS-specific
-# models without making the main CVE response models harder to scan.
-
-# No concrete models are defined yet because the current API surface only needs
-# normalized summary fields, and those already live in ``CVESummary``.
-
 
 
 from __future__ import annotations
