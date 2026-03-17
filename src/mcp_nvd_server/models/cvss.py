@@ -77,6 +77,8 @@ class NormalizedCVE(BaseModel):
     published: str | None = None
     last_modified: str | None = None
     description: str | None = None
+    severity: str | None = None
+    base_score: float | None = None
 
     cwe: list[str] = Field(default_factory=list)
     cpes: list[str] = Field(default_factory=list)

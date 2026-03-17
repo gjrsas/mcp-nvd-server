@@ -454,6 +454,8 @@ def build_normalized_cve(
         published=published,
         last_modified=last_modified,
         description=description,
+        severity=preferred.base_severity if preferred else None,
+        base_score=preferred.base_score if preferred else None,
         cwe=cwe or [],
         cpes=cpes or [],
         references=references or [],
