@@ -42,6 +42,49 @@ class CVEService:
             base_score=base_score,
         )
 
+    def _extract_cwes(self, cve: dict) -> list[str]:
+        weaknesses = cve.get("weaknesses", [])
+        cwe_list: list[str] = []
+
+        for weakness in weaknesses:
+            for desc in weakness.get("description", []):
+                value = desc.get("value")
+                if value and value not in ("NVD-CWE-Other", "NVD-CWE-noinfo"):
+                    cwe_list.append(value)
+        return list(dict.fromkeys(cwe_list))
+    
+    def _extract_cpes(self, cve: dict) -> list[str]:
+        configurations = cve.get("configurations", [])
+        cpe_list: list[str] = []
+
+        def collect_cpes(nodes: list[dict]) -> None:
+            for node in nodes:
+                for match in node.get("cpeMatch", []):
+                    criteria = match.get("criteria")
+                    if criteria:
+                        cpe_list.append(criteria)
+                child_nodes = node.get("nodes", [])
+                if child_nodes:
+                    collect_cpes(child_nodes)
+        
+        for config in configurations:
+            collect_cpes(config.get("nodes", []))
+        return list(dict.fromkeys(cpe_list))
+
+    def _extract_references(self, cve: dict) -> list[dict]:
+        references = cve.get("references", [])
+        references_list = [
+            {
+                "url": ref.get("url"),
+                "source": ref.get("source"),
+                "tags": ref.get("tags", []),
+            }
+            for ref in references
+            if ref.get("url")
+        ]
+        return references_list
+    
+
     async def get_cve(self, cve_id: str) -> dict:
         try:
             data = await self.client.get_cve(cve_id)
@@ -67,6 +110,7 @@ class CVEService:
             }
 
         cve = vulnerabilities[0].get("cve", {})
+        resolved_cve_id = cve.get("id", cve_id)
         
         descriptions = cve.get("descriptions", [])
         english_description = next(
@@ -108,7 +152,7 @@ class CVEService:
             if ref.get("url")
         ]
 
-        kev_record = await self.kev_client.get_by_cve(cve.get("id", ""))
+        kev_record = await self.kev_client.get_by_cve(resolved_cve_id)
 
         cisa_kev_metadata = {
             "exploit_add_date": cve.get("cisaExploitAdd"),
@@ -205,5 +249,4 @@ class CVEService:
         return {
             "found": True,
             "results": result.model_dump(),
-            "result": result.model_dump(),
         }
