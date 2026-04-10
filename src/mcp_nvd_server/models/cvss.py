@@ -28,6 +28,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from mcp_nvd_server.models.kev import CisaKevMetadata
+
 
 CVSSVersion = Literal["2.0", "3.0", "3.1", "4.0"]
 CVSSSource = Literal["nvd", "cna", "other", "unknown"]
@@ -89,4 +91,4 @@ class NormalizedCVE(BaseModel):
     cvss_versions_available: list[str] = Field(default_factory=list)
     cvss_interpretation: CVSSInterpretation | None = None
 
-    kev: dict = Field(default_factory=dict)
+    cisa_kev_metadata: CisaKevMetadata | None = None
