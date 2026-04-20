@@ -55,15 +55,16 @@ Base URLs:
 - `nvd_search_cves` tool
 - NVD API client
 - CVE normalization service
-
-Not yet included:
 - CVE history search
 - CPE search
 - KEV client and enrichment
+
+Not yet included:
 - retry/backoff logic
 - caching
 - full test coverage
 - remote HTTP transport
+- OAuth authentication
 
 ## Quick start
 
